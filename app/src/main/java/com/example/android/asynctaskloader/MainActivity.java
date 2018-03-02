@@ -17,6 +17,7 @@ package com.example.android.asynctaskloader;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
         // TODO (9) If the savedInstanceState bundle is not null, set the text of the URL and search results TextView respectively
+
+        if(savedInstanceState != null){
+            String queryURL = savedInstanceState.getString(SEARCH_QUER_URL_EXTRA);
+            String rawJSON = savedInstanceState.getString(SEARCH_RESULTS_RAW_JSON);
+
+            mUrlDisplayTextView.setText(queryURL);
+            mSearchResultsTextView.setText(rawJSON);
+        }
     }
 
     /**
@@ -158,10 +167,27 @@ public class MainActivity extends AppCompatActivity {
     // TODO (3) Override onSaveInstanceState to persist data across Activity recreation
     // Do the following steps within onSaveInstanceState
     // TODO (4) Make sure super.onSaveInstanceState is called before doing anything else
+    //COMPLETE
 
     // TODO (5) Put the contents of the TextView that contains our URL into a variable
+    //COMPLETE
     // TODO (6) Using the key for the query URL, put the string in the outState Bundle
+    //COMPLETE
 
     // TODO (7) Put the contents of the TextView that contains our raw JSON search results into a variable
+
     // TODO (8) Using the key for the raw JSON search results, put the search results into the outState Bundle
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+
+        String queryURL = mUrlDisplayTextView.getText().toString();
+        outState.putString(SEARCH_QUER_URL_EXTRA ,queryURL);
+
+        String rawResults = mSearchResultsTextView.getText().toString();
+        outState.putString(SEARCH_RESULTS_RAW_JSON, rawResults);
+
+    }
 }
